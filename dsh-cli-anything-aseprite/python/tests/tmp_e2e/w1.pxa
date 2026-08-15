@@ -1,0 +1,110 @@
+{
+  "doc_version": "1.0.0",
+  "name": "w1",
+  "width": 16,
+  "height": 16,
+  "color_mode": "rgba",
+  "palette": [
+    {
+      "index": 0,
+      "name": "black",
+      "color": "#000000ff"
+    },
+    {
+      "index": 1,
+      "name": "dark-blue",
+      "color": "#1d2b53ff"
+    },
+    {
+      "index": 2,
+      "name": "dark-purple",
+      "color": "#7e2553ff"
+    },
+    {
+      "index": 3,
+      "name": "dark-green",
+      "color": "#008751ff"
+    },
+    {
+      "index": 4,
+      "name": "brown",
+      "color": "#ab5236ff"
+    },
+    {
+      "index": 5,
+      "name": "dark-gray",
+      "color": "#5f574fff"
+    },
+    {
+      "index": 6,
+      "name": "light-gray",
+      "color": "#c2c3c7ff"
+    },
+    {
+      "index": 7,
+      "name": "white",
+      "color": "#fff1e8ff"
+    },
+    {
+      "index": 8,
+      "name": "red",
+      "color": "#ff004dff"
+    },
+    {
+      "index": 9,
+      "name": "orange",
+      "color": "#ffa300ff"
+    },
+    {
+      "index": 10,
+      "name": "yellow",
+      "color": "#ffec27ff"
+    },
+    {
+      "index": 11,
+      "name": "green",
+      "color": "#00e436ff"
+    },
+    {
+      "index": 12,
+      "name": "blue",
+      "color": "#29adffff"
+    },
+    {
+      "index": 13,
+      "name": "indigo",
+      "color": "#83769cff"
+    },
+    {
+      "index": 14,
+      "name": "pink",
+      "color": "#ff77a8ff"
+    },
+    {
+      "index": 15,
+      "name": "peach",
+      "color": "#ffccaaff"
+    }
+  ],
+  "layers": [
+    {
+      "id": 0,
+      "name": "base",
+      "visible": true,
+      "opacity": 255
+    }
+  ],
+  "frames": [
+    {
+      "id": 0,
+      "duration": 100,
+      "cels": {
+        "0": {}
+      }
+    }
+  ],
+  "current_frame": 0,
+  "current_layer": 0,
+  "created": "2026-08-15T08:44:20.915468+00:00",
+  "modified": "2026-08-15T08:44:20.915495+00:00"
+}

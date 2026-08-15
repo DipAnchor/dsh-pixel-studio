@@ -1,0 +1,25 @@
+{
+  "name": "dsh-pixel-studio",
+  "description": "Aseprite-style pixel art studio for DeepSeek Harness: AI draws pixel art like a human, every stroke live on the terminal/GUI monitor.",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShingingSky/dsh-pixel-studio.git"
+  },
+  "keywords": [
+    "deepseek", "harness", "dsh", "dsh-plugin",
+    "aseprite", "pixel-art", "sprite", "cli-anything"
+  ],
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}

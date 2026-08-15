@@ -1,0 +1,187 @@
+{
+  "doc_version": "1.0.0",
+  "name": "w2",
+  "width": 16,
+  "height": 16,
+  "color_mode": "rgba",
+  "palette": [
+    {
+      "index": 0,
+      "name": "black",
+      "color": "#1a1c2c"
+    },
+    {
+      "index": 1,
+      "name": "dark-blue",
+      "color": "#5d275d"
+    },
+    {
+      "index": 2,
+      "name": "dark-purple",
+      "color": "#b13e53"
+    },
+    {
+      "index": 3,
+      "name": "dark-green",
+      "color": "#ef7d57"
+    },
+    {
+      "index": 4,
+      "name": "brown",
+      "color": "#ffcd75"
+    },
+    {
+      "index": 5,
+      "name": "dark-gray",
+      "color": "#a7f070"
+    },
+    {
+      "index": 6,
+      "name": "light-gray",
+      "color": "#38b764"
+    },
+    {
+      "index": 7,
+      "name": "white",
+      "color": "#257179"
+    },
+    {
+      "index": 8,
+      "name": "red",
+      "color": "#29366f"
+    },
+    {
+      "index": 9,
+      "name": "orange",
+      "color": "#3b5dc9"
+    },
+    {
+      "index": 10,
+      "name": "yellow",
+      "color": "#41a6f6"
+    },
+    {
+      "index": 11,
+      "name": "green",
+      "color": "#73eff7"
+    },
+    {
+      "index": 12,
+      "name": "blue",
+      "color": "#f4f4f4"
+    },
+    {
+      "index": 13,
+      "name": "indigo",
+      "color": "#94b0c2"
+    },
+    {
+      "index": 14,
+      "name": "pink",
+      "color": "#566c86"
+    },
+    {
+      "index": 15,
+      "name": "peach",
+      "color": "#333c57"
+    }
+  ],
+  "layers": [
+    {
+      "id": 0,
+      "name": "base",
+      "visible": true,
+      "opacity": 255
+    }
+  ],
+  "frames": [
+    {
+      "id": 0,
+      "duration": 100,
+      "cels": {
+        "0": {
+          "7,7": "#ffec27ff",
+          "2,14": "#29adffff",
+          "13,14": "#29adffff",
+          "8,14": "#29adffff",
+          "3,14": "#29adffff",
+          "10,14": "#29adffff",
+          "5,14": "#29adffff",
+          "6,14": "#29adffff",
+          "9,14": "#29adffff",
+          "4,14": "#29adffff",
+          "11,14": "#29adffff",
+          "12,14": "#29adffff",
+          "7,14": "#29adffff",
+          "4,3": "#ffec27ff",
+          "4,9": "#ffec27ff",
+          "5,4": "#ffec27ff",
+          "4,6": "#ffec27ff",
+          "5,7": "#ffec27ff",
+          "9,5": "#ffec27ff",
+          "8,3": "#ffec27ff",
+          "8,9": "#ffec27ff",
+          "10,6": "#ffec27ff",
+          "9,8": "#ffec27ff",
+          "11,5": "#ffec27ff",
+          "10,3": "#ffec27ff",
+          "8,6": "#ffec27ff",
+          "10,9": "#ffec27ff",
+          "11,8": "#ffec27ff",
+          "5,10": "#ffec27ff",
+          "7,4": "#ffec27ff",
+          "6,5": "#ffec27ff",
+          "7,10": "#ffec27ff",
+          "6,8": "#ffec27ff",
+          "4,5": "#ffec27ff",
+          "5,6": "#ffec27ff",
+          "4,8": "#ffec27ff",
+          "5,3": "#ffec27ff",
+          "5,9": "#ffec27ff",
+          "9,7": "#ffec27ff",
+          "11,4": "#ffec27ff",
+          "8,5": "#ffec27ff",
+          "9,4": "#ffec27ff",
+          "9,10": "#ffec27ff",
+          "11,7": "#ffec27ff",
+          "10,5": "#ffec27ff",
+          "8,8": "#ffec27ff",
+          "11,10": "#ffec27ff",
+          "10,8": "#ffec27ff",
+          "6,4": "#ffec27ff",
+          "7,3": "#ffec27ff",
+          "7,9": "#ffec27ff",
+          "6,7": "#ffec27ff",
+          "7,6": "#ffec27ff",
+          "6,10": "#ffec27ff",
+          "4,7": "#ffec27ff",
+          "4,4": "#ffec27ff",
+          "4,10": "#ffec27ff",
+          "5,5": "#ffec27ff",
+          "8,4": "#ffec27ff",
+          "9,3": "#ffec27ff",
+          "5,8": "#ffec27ff",
+          "8,7": "#ffec27ff",
+          "10,4": "#ffec27ff",
+          "9,6": "#ffec27ff",
+          "11,3": "#ffec27ff",
+          "9,9": "#ffec27ff",
+          "10,7": "#ffec27ff",
+          "11,9": "#ffec27ff",
+          "11,6": "#ffec27ff",
+          "8,10": "#ffec27ff",
+          "10,10": "#ffec27ff",
+          "6,6": "#ffec27ff",
+          "7,5": "#ffec27ff",
+          "6,3": "#ffec27ff",
+          "6,9": "#ffec27ff",
+          "7,8": "#ffec27ff"
+        }
+      }
+    }
+  ],
+  "current_frame": 0,
+  "current_layer": 0,
+  "created": "2026-08-15T08:44:20.977519+00:00",
+  "modified": "2026-08-15T08:44:21.181555+00:00"
+}

@@ -1,0 +1,38 @@
+{
+  "name": "dsh-cli-anything-aseprite",
+  "version": "1.0.0",
+  "description": "Aseprite pixel-art studio for DeepSeek Harness: an agent-usable CLI harness (CLI-Anything methodology) + DSH plugin tools that let AI draw pixel art like a human, stroke by stroke, live-visible in the terminal.",
+  "type": "module",
+  "main": "src/index.js",
+  "files": [
+    "src",
+    "python",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "python3 -m pytest python/cli_anything/aseprite/tests/ -q"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "aseprite",
+    "pixel-art",
+    "cli-anything",
+    "pixel-art-ai",
+    "sprite"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@deepseek-ai/dsh-tools": "^0.1.0-rc.5"
+  }
+}

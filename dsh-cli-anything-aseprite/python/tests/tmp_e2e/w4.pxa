@@ -1,0 +1,122 @@
+{
+  "doc_version": "1.0.0",
+  "name": "w4",
+  "width": 16,
+  "height": 16,
+  "color_mode": "rgba",
+  "palette": [
+    {
+      "index": 0,
+      "name": "black",
+      "color": "#1a1c2c"
+    },
+    {
+      "index": 1,
+      "name": "dark-blue",
+      "color": "#5d275d"
+    },
+    {
+      "index": 2,
+      "name": "dark-purple",
+      "color": "#b13e53"
+    },
+    {
+      "index": 3,
+      "name": "dark-green",
+      "color": "#ef7d57"
+    },
+    {
+      "index": 4,
+      "name": "brown",
+      "color": "#ffcd75"
+    },
+    {
+      "index": 5,
+      "name": "dark-gray",
+      "color": "#a7f070"
+    },
+    {
+      "index": 6,
+      "name": "light-gray",
+      "color": "#38b764"
+    },
+    {
+      "index": 7,
+      "name": "white",
+      "color": "#257179"
+    },
+    {
+      "index": 8,
+      "name": "red",
+      "color": "#29366f"
+    },
+    {
+      "index": 9,
+      "name": "orange",
+      "color": "#3b5dc9"
+    },
+    {
+      "index": 10,
+      "name": "yellow",
+      "color": "#41a6f6"
+    },
+    {
+      "index": 11,
+      "name": "green",
+      "color": "#73eff7"
+    },
+    {
+      "index": 12,
+      "name": "blue",
+      "color": "#f4f4f4"
+    },
+    {
+      "index": 13,
+      "name": "indigo",
+      "color": "#94b0c2"
+    },
+    {
+      "index": 14,
+      "name": "pink",
+      "color": "#566c86"
+    },
+    {
+      "index": 15,
+      "name": "peach",
+      "color": "#333c57"
+    }
+  ],
+  "layers": [
+    {
+      "id": 0,
+      "name": "base",
+      "visible": true,
+      "opacity": 255
+    }
+  ],
+  "frames": [
+    {
+      "id": 0,
+      "duration": 100,
+      "cels": {
+        "0": {
+          "1,1": "#ff0000ff"
+        }
+      }
+    },
+    {
+      "id": 1,
+      "duration": 120,
+      "cels": {
+        "0": {
+          "1,1": "#ff0000ff",
+          "14,1": "#00ff00ff"
+        }
+      }
+    }
+  ],
+  "current_frame": 1,
+  "current_layer": 0,
+  "created": "2026-08-15T08:44:21.528042+00:00",
+  "modified": "2026-08-15T08:44:21.713563+00:00"
+}

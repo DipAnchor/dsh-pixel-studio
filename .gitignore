@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+.venv/
+venv/
+
+# Node
+node_modules/
+lib/
+*.tsbuildinfo
+
+# Pixel Studio runtime data (user workspaces)
+artwork/
+downloads/
+viz/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Logs / temp
+*.log
+*.tmp
+cli-anything/

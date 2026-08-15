@@ -1,0 +1,25 @@
+"""Common CSS color names -> #rrggbbaa. Kept compact (web-safe subset + common)."""
+
+CSS_COLORS = {
+    "black": "#000000ff", "white": "#ffffffff", "red": "#ff0000ff",
+    "green": "#008000ff", "lime": "#00ff00ff", "blue": "#0000ffff",
+    "yellow": "#ffff00ff", "cyan": "#00ffffff", "aqua": "#00ffffff",
+    "magenta": "#ff00ffff", "fuchsia": "#ff00ffff", "gray": "#808080ff",
+    "grey": "#808080ff", "silver": "#c0c0c0ff", "maroon": "#800000ff",
+    "olive": "#808000ff", "navy": "#000080ff", "purple": "#800080ff",
+    "teal": "#008080ff", "orange": "#ffa500ff", "pink": "#ffc0cbff",
+    "brown": "#a52a2aff", "gold": "#ffd700ff", "skyblue": "#87ceebff",
+    "indigo": "#4b0082ff", "violet": "#ee82eeff", "beige": "#f5f5dcff",
+    "coral": "#ff7f50ff", "crimson": "#dc143cff", "khaki": "#f0e68cff",
+    "lavender": "#e6e6faff", "salmon": "#fa8072ff", "seagreen": "#2e8b57ff",
+    "tan": "#d2b48cff", "turquoise": "#40e0d0ff", "wheat": "#f5deb3ff",
+    "chocolate": "#d2691eff", "tomato": "#ff6347ff", "orchid": "#da70d6ff",
+    "plum": "#dda0ddff", "ivory": "#fffff0ff", "mintcream": "#f5fffaff",
+    "aliceblue": "#f0f8ffff", "gainsboro": "#dcdcdcff", "dimgray": "#696969ff",
+    "lightgray": "#d3d3d3ff", "darkgray": "#a9a9a9ff", "darkred": "#8b0000ff",
+    "darkgreen": "#006400ff", "darkblue": "#00008bff", "darkorange": "#ff8c00ff",
+    "darkviolet": "#9400d3ff", "deepskyblue": "#00bfffff", "hotpink": "#ff69b4ff",
+    "firebrick": "#b22222ff", "forestgreen": "#228b22ff", "goldenrod": "#daa520ff",
+    "mediumblue": "#0000cdff", "navajowhite": "#ffdeadff", "sienna": "#a0522dff",
+    "slateblue": "#6a5acdff", "steelblue": "#4682b4ff", "whitesmoke": "#f5f5f5ff",
+}

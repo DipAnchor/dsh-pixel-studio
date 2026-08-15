@@ -1,0 +1,7 @@
+# dsh-cli-anything-aseprite bundle: registers the pixel-art studio plugin.
+# Applied after dsh-base when a profile lists this bundle.
+- insert:
+    - id: cli-anything-aseprite
+      name: dsh-cli-anything-aseprite
+      config:
+        workdir: ~/.dsh/aseprite-work
