@@ -40,8 +40,8 @@ AI 像人类一样分步绘制像素画，每一步都实时渲染到终端与 G
 # 1) harness
 cd agent-harness && pip install -e .
 
-# 2) DSH 插件
-dsh plugin --profile web add github:<your-name>/dsh-pixel-studio
+# 2) DSH 插件（开源注册）
+dsh plugin --profile web add github:KongChengZhi/dsh-pixel-studio
 ```
 
 ## 🎨 快速上手
@@ -67,16 +67,12 @@ cli-anything-aseprite --file hero.pxa export aseprite hero.aseprite
 ## 🗂 项目结构
 
 ```
-├── agent-harness/          # cli-anything-aseprite（Python）
-│   └── cli_anything/aseprite/
-│       ├── core/           # model / canvas / palette / layers / animation / export / session
-│       ├── utils/          # terminal(ANSI) / io(并发安全) / aseprite_backend / repl_skin
-│       ├── tests/          # 49+ 单元 + E2E
-│       └── skills/SKILL.md # AI 类人像素画方法论
-├── plugin/                 # DSH 静态插件包（npm）
-│   ├── src/                # cordis 插件（host 工具 + client 监视器）
-│   └── cordis.patch.yml
-├── cli-anything/           # 上游 CLI-Anything 参考克隆
+├── agent-harness/          # cli-anything-aseprite（Python，开发版）
+│   └── cli_anything/aseprite/   # core / utils / tests / skills
+├── dsh-cli-anything-aseprite/  # ★ 正式 DSH 插件包（npm + python 副本）
+│   ├── src/index.js        # cordis 插件：20 个 pixelart_* 工具
+│   ├── python/             # harness 打包副本
+│   └── cordis.patch.yml    # 注册行（带 workdir 配置）
 └── README.md
 ```
 
