@@ -663,10 +663,11 @@ function InputToggle(props) {
 }
 
 /**
- * 「像素」标签页：注册成 `conversation.view` 的一个 target。
+ * 监视器卡片（`shell.overlay` 浮层）的样式表与渲染函数。
  *
- * 这是 tab 行的正规接法——和 dsh-context 的「上下文」、fleet 的「编队」同构：
- * slot 自己负责画 tab 和页面，不用往 DOM 里塞节点、也不用 createPortal。
+ * overlay 是富浮层 slot：面板自己负责整块卡片的样式与交互，
+ * 不用往 DOM 里塞节点、也不用 createPortal。会话隔离靠
+ * `conversation.input.dock` 上注册的 probe 拿到的 sessionId。
  */
 const V = {
   page: {

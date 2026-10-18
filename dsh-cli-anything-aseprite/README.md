@@ -4,7 +4,7 @@
 
 An agent-usable CLI harness for the [Aseprite](https://www.aseprite.com) pixel-art
 editor, built with the [CLI-Anything](https://github.com/HKUDS/CLI-Anything)
-methodology, plus a DSH plugin that turns it into 18 model tools. The AI draws
+methodology, plus a DSH plugin that turns it into 20 model tools. The AI draws
 pixel art **like a human** — one deliberate stroke at a time — and a live
 monitor panel above the composer repaints the canvas after every stroke, so the
 human and the model watch the same picture.
@@ -37,7 +37,7 @@ DSH 像素画工作室：AI 像人类一样分步绘制像素画（打形→底�
 - **75/75 tests** (unit + E2E, including byte-level .aseprite format checks).
 - Optional **live monitor UI** (draggable overlay: ANSI canvas, preview zoom,
   layers with opacity sliders, export buttons, project switcher, workdir
-  picker) — loaded as a DSH dynamic plugin, see `monitor/`.
+  picker) — loaded as a DSH dynamic plugin, see `client/`.
 
 ## 📦 Install
 
@@ -54,22 +54,18 @@ harness implements the document model, drawing primitives, and the native
 
 ### 2. Install the DSH plugin
 
-From a checkout:
+From a local checkout, point the installer at this package directory (the
+monorepo root has no `package.json`, so install this folder, not the root):
 
 ```bash
-dsh plugin add ./dsh-cli-anything-aseprite
+cd dsh-cli-anything-aseprite
+dsh plugin add .
 ```
 
 From npm (once published):
 
 ```bash
 dsh plugin add dsh-cli-anything-aseprite
-```
-
-From GitHub:
-
-```bash
-dsh plugin add github:YOUR_USER/dsh-cli-anything-aseprite
 ```
 
 Then verify the layer applied:
@@ -79,11 +75,18 @@ dsh --dump-config | grep cli-anything-aseprite
 ```
 
 The plugin registers 20 `pixelart_*` tools in every session of that profile.
-On first load it also copies the bundled `skills/pixel-art-studio/` into
-`~/.dsh/skills/pixel-art-studio/`, so every new session finds the drawing
-methodology (silhouette -> outline -> one-sided shading -> details, 3-6 colours,
-8x review before export) in its skill catalog without the user restating it.
-Set `config.installSkills: false` to skip that copy.
+Tool calls run under the session's current sandbox policy; the CLI's history
+directory is redirected to `<workdir>/.cli-home`, so a `workspace-write`
+session is enough (a read-only session fails loudly instead of silently
+escalating).
+
+By default the plugin does **not** write into `~/.dsh/skills`: the host does
+not remove that copy when the plugin is uninstalled, so it is opt-in. Set
+`config.installSkills: true` on the plugin row (or copy
+`skills/pixel-art-studio/` there yourself) when you want every new session to
+find the drawing methodology (silhouette -> outline -> one-sided shading ->
+details, 3-6 colours, 8x review before export) in its skill catalog without the
+user restating it.
 Workdir defaults to `<projectRoot>/temp/dsh-aseprite-work` (project root = the
 first ancestor of the `.pxa` carrying `.git` or `AGENTS.md`); override with the
 plugin `config.workdir:` row or `ASEPRITE_WORKDIR` env.
@@ -108,7 +111,7 @@ plugin `config.workdir:` row or `ASEPRITE_WORKDIR` env.
 
 ```
 dsh-cli-anything-aseprite/
-├── src/index.js            # DSH Host plugin: 18 pixelart_* tools (defineTool)
+├── src/index.js            # DSH Host plugin: 20 pixelart_* tools (defineTool)
 ├── cordis.patch.yml        # DSH bundle patch layer
 ├── package.json            # dsh.bundle manifest
 ├── python/                 # cli-anything-aseprite Python harness

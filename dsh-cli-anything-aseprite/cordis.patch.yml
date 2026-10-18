@@ -7,6 +7,7 @@
 # 需要自定义时在这里补：
 #   config:
 #     workdir: D:/some/scratch
+#     installSkills: true   # 默认 false：不往 ~/.dsh/skills 复制技能副本
 - insert:
     - id: cli-anything-aseprite
       name: dsh-cli-anything-aseprite

@@ -13,10 +13,10 @@
  *
  * 用法：node tools/simulate-install.mjs
  */
-import { readFileSync, existsSync } from 'node:fs'
+import { readFileSync, existsSync, statSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
-import { execFileSync } from 'node:child_process'
+import { Script } from 'node:vm'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const pkgDir = resolve(here, '..')
@@ -58,10 +58,10 @@ const deps = Object.keys(pkg.dependencies || {})
 const leaked = deps.filter(function (d) { return d.startsWith('@deepseek-ai/') })
 check('dependencies 不含 @deepseek-ai/*', leaked.length === 0, leaked.join(', ') || '干净')
 
-// 4. bundle 语法
+// 4. bundle 语法：用 vm.Script 在进程内解析，避免子进程管道在沙箱下报 EPERM
 if (clientEntry && existsSync(join(pkgDir, clientEntry))) {
   try {
-    execFileSync(process.execPath, ['--check', join(pkgDir, clientEntry)], { stdio: 'pipe' })
+    new Script(readFileSync(join(pkgDir, clientEntry), 'utf8'), { filename: clientEntry })
     check('client bundle 语法可解析', true)
   } catch (e) {
     check('client bundle 语法可解析', false, String(e && e.message).slice(0, 120))
@@ -117,6 +117,38 @@ if (clientEntry && existsSync(join(pkgDir, clientEntry))) {
   const js = readFileSync(join(pkgDir, clientEntry), 'utf8')
   const m = js.match(/load\(\s*\{\s*id:\s*["']([^"']+)["']/)
   check('client bundle id === 包名', Boolean(m) && m[1] === pkg.name, m ? m[1] : '未找到 id')
+}
+
+// 9. 显示元数据（host-plugin.md 的安装前清单：locale/*.json + icon）
+const exp = pkg.exports || {}
+check('exports 有 "./locale/*.json"', Boolean(exp['./locale/*.json']), String(exp['./locale/*.json']))
+check('exports 有 "./icon"', Boolean(exp['./icon']), String(exp['./icon']))
+const filesList = Array.isArray(pkg.files) ? pkg.files : []
+check('files 覆盖 locale/*.json', filesList.includes('locale/*.json'))
+check('files 覆盖 icon.svg', filesList.includes('icon.svg'))
+for (const lang of ['en', 'zh']) {
+  const rel = join('locale', lang + '.json')
+  const full = join(pkgDir, rel)
+  if (!existsSync(full)) { check('locale/' + lang + '.json 存在', false, rel); continue }
+  check('locale/' + lang + '.json 存在', true, rel)
+  try {
+    const meta = (JSON.parse(readFileSync(full, 'utf8')) || {}).meta || {}
+    check('locale/' + lang + ' 有 meta.title/description',
+      typeof meta.title === 'string' && meta.title.length > 0 &&
+      typeof meta.description === 'string' && meta.description.length > 0,
+      JSON.stringify({ title: meta.title, description: meta.description }).slice(0, 100))
+  } catch (e) {
+    check('locale/' + lang + ' JSON 可解析', false, String(e && e.message).slice(0, 100))
+  }
+}
+const iconRel = exp['./icon'] || 'icon.svg'
+const iconPath = join(pkgDir, iconRel)
+if (!existsSync(iconPath)) {
+  check('icon 文件存在', false, iconRel)
+} else {
+  const size = statSync(iconPath).size
+  const head = readFileSync(iconPath, 'utf8').slice(0, 200)
+  check('icon 是 SVG 且 ≤ 256 KiB', head.includes('<svg') && size <= 256 * 1024, iconRel + ' ' + size + ' B')
 }
 
 console.log('\n模拟安装校验：' + (failed === 0 ? '全部通过' : failed + ' 项失败') + '\n')

@@ -1,7 +1,7 @@
 /**
  * dsh-cli-anything-aseprite — formal DSH Host plugin.
  *
- * Registers the pixel-art studio tool set (18 tools) that drive the
+ * Registers the pixel-art studio tool set (20 tools) that drive the
  * `cli-anything-aseprite` Python harness (CLI-Anything methodology):
  * every stroke is a real CLI command against a persistent project file,
  * so AI draws pixel art like a human — one deliberate operation at a time.
@@ -38,17 +38,17 @@ function q(arg) {
 }
 
 /**
- * 把包内的 skills/pixel-art-studio 复制到用户 skill 根（~/.dsh/skills）。
- * 幂等：目标已存在就跳过；config.installSkills === false 可关闭。
+ * 可选：把包内的 skills/pixel-art-studio 复制到用户 skill 根（~/.dsh/skills）。
+ * 默认关闭：安装/加载插件时不该往用户 home 下写东西，而且宿主卸载插件时不会
+ * 回收这份副本，得手动删。config.installSkills === true 时才复制（覆盖成当前版本），
  * 这样任何新开的会话都能在技能目录里看到这套分遍流程。
  */
 function installUserSkill(config) {
-  if (config && config.installSkills === false) return
+  if (!config || config.installSkills !== true) return
   try {
     const src = join(dirname(fileURLToPath(import.meta.url)), '..', 'skills', 'pixel-art-studio')
     if (!existsSync(src)) return
     const dest = join(homedir(), '.dsh', 'skills', 'pixel-art-studio')
-    if (existsSync(join(dest, 'SKILL.md'))) return
     mkdirSync(dirname(dest), { recursive: true })
     cpSync(src, dest, { recursive: true })
   } catch (e) { /* 装不上不影响工具可用 */ }
@@ -60,7 +60,7 @@ export function apply(ctx, config = {}) {
   // 逐遍快照（record/）、路径记忆，全在这一个目录里，不往用户的 ~/.dsh 堆东西。
   // 项目根优先用显式传入的 project，其次从当前 .pxa 往上找，最后从 cwd 找。
   const CONFIG_DIR = (process.env.ASEPRITE_WORKDIR || config.workdir || '')
-  // 让新会话自动知道绘画流程：把方法论装进用户级 skill 根。
+  // 让新会话自动知道绘画流程（默认关闭，见 installUserSkill 注释）。
   installUserSkill(config)
 
   const state = {
@@ -189,14 +189,20 @@ export function apply(ctx, config = {}) {
   async function runCli(args) {
     const shell = ctx.get('shell')
     if (shell === undefined) throw new Error('shell service unavailable — dsh shell plugin missing')
+    // 照用会话当前的沙箱策略（不偷偷提权到 danger-full-access）。
+    // CLI 的历史/缓存目录（~/.cli-anything-aseprite）通过 HOME/USERPROFILE 指到
+    // 工作区内，所以 workspace-write 会话也够用；只读会话会如实失败。
     const policy = ctx.get('sandboxPolicy') !== undefined
-      ? ctx.get('sandboxPolicy').resolve({ mode: 'danger-full-access' })
+      ? ctx.get('sandboxPolicy').resolve({})
       : undefined
+    const localHome = join(workdir(), '.cli-home')
+    try { mkdirSync(localHome, { recursive: true }) } catch (e) { /* 建不出也不阻塞 */ }
     const spec = shell.resolve({
       command: [CLI].concat(args).map((value, index) => (index === 0 ? String(value) : q(value))).join(' '),
       workdir: workdir(),
       timeoutMs: 60000,
       stdoutMaxBytes: 4000000,
+      env: { HOME: localHome, USERPROFILE: localHome },
       sandboxPolicy: policy,
     })
     // 面板的「最近操作」直接显示这条，比只有 'draw pixel' 更能看出在画什么。
@@ -644,7 +650,7 @@ export function apply(ctx, config = {}) {
   })
 
   // auto-resume the default project on start
-  ctx.timeout(async () => {
+  ctx.effect(() => ctx.timeout(async () => {
     try {
       const fs = ctx.get('fs')
       const f = join(workdir(), 'art.pxa')
@@ -653,5 +659,5 @@ export function apply(ctx, config = {}) {
         await refresh('resumed')
       }
     } catch (e) { /* no project yet */ }
-  }, 300)
+  }, 300), 'cli-anything-aseprite: resume default project')
 }

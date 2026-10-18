@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Pixel Art Studio",
+    "description": "Aseprite-style pixel-art tools for the agent: 20 pixelart_* tools plus a live canvas monitor above the composer, so sprites are drawn stroke by stroke while you watch."
+  }
+}

@@ -31,4 +31,5 @@ Thumbs.db
 cli-anything/
 
 
+# 本地移植/调试记录（含本机环境与项目细节），不随发布版本
 docs/

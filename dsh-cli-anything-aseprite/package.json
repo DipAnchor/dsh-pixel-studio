@@ -1,12 +1,14 @@
 {
   "name": "dsh-cli-anything-aseprite",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Aseprite pixel-art studio for DeepSeek Harness: an agent-usable CLI harness (CLI-Anything methodology) + DSH plugin tools that let AI draw pixel art like a human, stroke by stroke, with a live monitor panel in the web GUI.",
   "type": "module",
   "main": "src/index.js",
   "exports": {
     ".": "./src/index.js",
     "./client": "./client/monitor.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
     "./cordis.patch.yml": "./cordis.patch.yml",
     "./package.json": "./package.json"
   },
@@ -16,13 +18,15 @@
     "scripts",
     "python",
     "skills",
+    "locale/*.json",
+    "icon.svg",
     "cordis.patch.yml",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
     "build:client": "node scripts/build-client.mjs",
-    "test": "python3 -m pytest python/cli_anything/aseprite/tests/ -q"
+    "test": "python -m pytest python/cli_anything/aseprite/tests/ -q"
   },
   "keywords": [
     "dsh",
@@ -46,6 +50,12 @@
   "engines": {
     "node": ">=20"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DipAnchor/dsh-pixel-studio.git",
+    "directory": "dsh-cli-anything-aseprite"
+  },
+  "homepage": "https://github.com/DipAnchor/dsh-pixel-studio#readme",
   "license": "MIT",
   "peerDependencies": {
     "@deepseek-ai/cordis": "*",

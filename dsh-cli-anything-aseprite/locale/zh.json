@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "像素画工作台",
+    "description": "把 Aseprite 式像素画工作流交给 AI：20 个 pixelart_* 工具逐笔画图，输入框上方的实时面板同步刷新画布。"
+  }
+}

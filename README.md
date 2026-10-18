@@ -37,12 +37,21 @@ AI 像人类一样分步绘制像素画，每一步都实时渲染到终端与 G
 ## 📦 安装
 
 ```bash
-# 1) harness
-cd agent-harness && pip install -e .
+# 1) CLI harness（正式插件包自带 python/ 副本；开发版在 agent-harness/）
+cd dsh-cli-anything-aseprite && pip install -e python
 
-# 2) DSH 插件（开源注册）
-dsh plugin --profile web add github:KongChengZhi/dsh-pixel-studio
+# 2) DSH 插件：本地目录安装（<profile> 用桌面端启动参数里的 --profile，常见是 web）
+dsh plugin --profile <profile> add link:<本仓库>/dsh-cli-anything-aseprite
 ```
+
+> 为什么不是 `add github:…`：本仓库根目录没有 `package.json`，插件在
+> `dsh-cli-anything-aseprite/` 子目录里。GitHub 直装需要能定位到子包
+> （或先发布到 npm，再 `dsh plugin add dsh-cli-anything-aseprite`）。
+>
+> 装好重启/热加载后，插件默认**不**往 `~/.dsh/skills` 复制技能（避免卸载残留）；
+> 需要让新会话自动具备这套绘画流程时，在插件配置里加 `"installSkills": true`，
+> 或手动把 `dsh-cli-anything-aseprite/skills/pixel-art-studio` 放进 `~/.dsh/skills`。
+> 工具调用沿用当前会话的沙箱策略（不再强制 `danger-full-access`）。
 
 ## 🎨 快速上手
 
