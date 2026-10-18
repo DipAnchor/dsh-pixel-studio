@@ -103,7 +103,16 @@ if (patchRel && existsSync(join(pkgDir, patchRel))) {
   check('patch 文件存在', false, patchRel)
 }
 
-// 7. 客户端 bundle 的 id 必须等于包名（ui-plugin.md 的要求）
+// 7. 内置 skill：apply() 会把它复制到 ~/.dsh/skills，新会话据此得知绘画流程
+const skillFile = join(pkgDir, 'skills', 'pixel-art-studio', 'SKILL.md')
+check('内置 pixel-art-studio skill', existsSync(skillFile), 'skills/pixel-art-studio/SKILL.md')
+if (existsSync(skillFile)) {
+  const head = readFileSync(skillFile, 'utf8').slice(0, 400)
+  check('skill 有 name/description frontmatter',
+    head.startsWith('---') && head.includes('name:') && head.includes('description:'))
+}
+
+// 8. 客户端 bundle 的 id 必须等于包名（ui-plugin.md 的要求）
 if (clientEntry && existsSync(join(pkgDir, clientEntry))) {
   const js = readFileSync(join(pkgDir, clientEntry), 'utf8')
   const m = js.match(/load\(\s*\{\s*id:\s*["']([^"']+)["']/)

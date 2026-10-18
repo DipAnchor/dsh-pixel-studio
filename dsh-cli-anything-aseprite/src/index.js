@@ -14,10 +14,11 @@
  * loaded via DSH dynamic plugins in a session — see README.
  */
 import { defineTool } from '@deepseek-ai/dsh-tools'
-import { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync, readdirSync, unlinkSync, statSync } from 'node:fs'
+import { readFileSync, writeFileSync, existsSync, mkdirSync, copyFileSync, readdirSync, unlinkSync, statSync, cpSync } from 'node:fs'
 import { execFile } from 'node:child_process'
 import { homedir, tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 export const name = 'cli-anything-aseprite'
 export const inject = ['tools', 'timer']
@@ -36,13 +37,31 @@ function q(arg) {
   return "'" + s.replace(/'/g, "'\\''") + "'"
 }
 
+/**
+ * 把包内的 skills/pixel-art-studio 复制到用户 skill 根（~/.dsh/skills）。
+ * 幂等：目标已存在就跳过；config.installSkills === false 可关闭。
+ * 这样任何新开的会话都能在技能目录里看到这套分遍流程。
+ */
+function installUserSkill(config) {
+  if (config && config.installSkills === false) return
+  try {
+    const src = join(dirname(fileURLToPath(import.meta.url)), '..', 'skills', 'pixel-art-studio')
+    if (!existsSync(src)) return
+    const dest = join(homedir(), '.dsh', 'skills', 'pixel-art-studio')
+    if (existsSync(join(dest, 'SKILL.md'))) return
+    mkdirSync(dirname(dest), { recursive: true })
+    cpSync(src, dest, { recursive: true })
+  } catch (e) { /* 装不上不影响工具可用 */ }
+}
+
 export function apply(ctx, config = {}) {
   const CLI = 'cli-anything-aseprite'
-  // 工作区放系统临时目录：插件不应该往用户的 ~/.dsh（DSH 的配置目录）里
   // 所有落盘都收在「项目根/temp/dsh-aseprite-work」：临时 pxa、导出的 png、
   // 逐遍快照（record/）、路径记忆，全在这一个目录里，不往用户的 ~/.dsh 堆东西。
   // 项目根优先用显式传入的 project，其次从当前 .pxa 往上找，最后从 cwd 找。
   const CONFIG_DIR = (process.env.ASEPRITE_WORKDIR || config.workdir || '')
+  // 让新会话自动知道绘画流程：把方法论装进用户级 skill 根。
+  installUserSkill(config)
 
   const state = {
     version: 0, file: null, name: '', width: 0, height: 0,

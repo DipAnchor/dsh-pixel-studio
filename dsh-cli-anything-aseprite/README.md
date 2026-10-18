@@ -79,6 +79,11 @@ dsh --dump-config | grep cli-anything-aseprite
 ```
 
 The plugin registers 20 `pixelart_*` tools in every session of that profile.
+On first load it also copies the bundled `skills/pixel-art-studio/` into
+`~/.dsh/skills/pixel-art-studio/`, so every new session finds the drawing
+methodology (silhouette -> outline -> one-sided shading -> details, 3-6 colours,
+8x review before export) in its skill catalog without the user restating it.
+Set `config.installSkills: false` to skip that copy.
 Workdir defaults to `<projectRoot>/temp/dsh-aseprite-work` (project root = the
 first ancestor of the `.pxa` carrying `.git` or `AGENTS.md`); override with the
 plugin `config.workdir:` row or `ASEPRITE_WORKDIR` env.
