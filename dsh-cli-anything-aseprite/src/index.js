@@ -187,15 +187,19 @@ export function apply(ctx, config = {}) {
   }
   /** 最近一次 CLI 调用的参数串（去掉 --file/--json），面板用它显示"正在画什么"。 */
   let lastCmd = ''
+  /** 本次工具调用所属会话；runCli 用它把会话的沙箱模式透传给 shell。 */
+  let currentSession
 
   async function runCli(args) {
     const shell = ctx.get('shell')
     if (shell === undefined) throw new Error('shell service unavailable — dsh shell plugin missing')
     // 照用会话当前的沙箱策略（不偷偷提权到 danger-full-access）。
-    // CLI 的历史/缓存目录（~/.cli-anything-aseprite）通过 HOME/USERPROFILE 指到
-    // 工作区内，所以 workspace-write 会话也够用；只读会话会如实失败。
+    // resolve 必须带上 session，否则会落到部署默认 read-only 而不是会话的
+    // workspace-write（SandboxPolicyService.resolve 的 session 参数决定读哪条
+    // sandbox/mode 事件）。CLI 的历史/缓存目录（~/.cli-anything-aseprite）通过
+    // HOME/USERPROFILE 指到工作区内，所以 workspace-write 会话也够用。
     const policy = ctx.get('sandboxPolicy') !== undefined
-      ? ctx.get('sandboxPolicy').resolve({})
+      ? ctx.get('sandboxPolicy').resolve({ session: currentSession })
       : undefined
     const localHome = join(workdir(), '.cli-home')
     try { mkdirSync(localHome, { recursive: true }) } catch (e) { /* 建不出也不阻塞 */ }
@@ -274,7 +278,11 @@ export function apply(ctx, config = {}) {
         schema: { type: 'json' },
         render: (_a, v) => [{ type: 'text', text: JSON.stringify(v, null, 2) }],
       },
-      async execute(args, exec) { return execute(args, exec) },
+      async execute(args, exec) {
+        // 把调用方会话交给 runCli，沙箱策略才能跟随会话（见 runCli）。
+        currentSession = exec && exec.agent ? exec.agent.session : undefined
+        return execute(args, exec)
+      },
       timeoutMs: 90000,
     }))
   }
