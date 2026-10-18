@@ -91,21 +91,23 @@ let localeRt = null
  * 没有 locale 服务时（比如独立试跑）退回中文。
  */
 const MSG = {
-  untitled: { zh: t('untitled'), en: 'No project' },
-  noProject: { zh: t('noProject'), en: 'No project open yet. Ask the AI to call pixelart_open on a .pxa.' },
-  waitingFrame: { zh: t('waitingFrame'), en: 'Waiting for the first frame…' },
-  openHistory: { zh: t('openHistory'), en: 'Open a past work' },
-  openDir: { zh: t('openDir'), en: 'Open snapshot folder' },
-  zoom: { zh: t('zoom'), en: 'Zoom' },
-  pause: { zh: t('pause'), en: 'Pause playback' },
-  play: { zh: t('play'), en: 'Play back, 1s per step' },
-  cursor: { zh: t('cursor'), en: 'Review a step' },
-  copy: { zh: t('copy'), en: 'Copy this step info' },
-  copied: { zh: t('copied'), en: 'Copied' },
-  latest: { zh: t('latest'), en: 'Jump to latest' },
-  noHistory: { zh: t('noHistory'), en: 'No past work yet' },
-  close: { zh: t('close'), en: 'Collapse' },
+  untitled: { zh: '未命名', en: 'No project' },
+  noProject: { zh: '还没有打开项目。让 AI 调 pixelart_open 打开一个 .pxa。', en: 'No project open yet. Ask the AI to call pixelart_open on a .pxa.' },
+  waitingFrame: { zh: '等待第一帧…', en: 'Waiting for the first frame…' },
+  openHistory: { zh: '打开历史作品', en: 'Open a past work' },
+  openDir: { zh: '打开快照目录', en: 'Open snapshot folder' },
+  zoom: { zh: '缩放', en: 'Zoom' },
+  pause: { zh: '暂停播放', en: 'Pause playback' },
+  play: { zh: '每步 1 秒回放', en: 'Play back, 1s per step' },
+  cursor: { zh: '回看某一步', en: 'Review a step' },
+  copy: { zh: '复制该步信息', en: 'Copy this step info' },
+  copied: { zh: '已复制', en: 'Copied' },
+  latest: { zh: '跳到最新', en: 'Jump to latest' },
+  noHistory: { zh: '还没有历史作品', en: 'No past work yet' },
+  close: { zh: '收起', en: 'Collapse' },
 }
+// MSG 的字面量里**不能**再调 t()：t 读的就是 MSG，会在 TDZ 里炸
+// （`Cannot access 'MSG' before initialization` 直接让整个 web boot 失败）。
 
 function t(key) {
   const m = MSG[key]

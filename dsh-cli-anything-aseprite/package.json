@@ -1,6 +1,6 @@
 {
   "name": "dsh-cli-anything-aseprite",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Aseprite pixel-art studio for DeepSeek Harness: an agent-usable CLI harness (CLI-Anything methodology) + DSH plugin tools that let AI draw pixel art like a human, stroke by stroke, with a live monitor panel in the web GUI.",
   "type": "module",
   "main": "src/index.js",
