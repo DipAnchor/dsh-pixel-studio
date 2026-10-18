@@ -5,13 +5,13 @@
 An agent-usable CLI harness for the [Aseprite](https://www.aseprite.com) pixel-art
 editor, built with the [CLI-Anything](https://github.com/HKUDS/CLI-Anything)
 methodology, plus a DSH plugin that turns it into 18 model tools. The AI draws
-pixel art **like a human** — one deliberate stroke at a time — and every stroke
-is rendered live as an ANSI terminal frame, so humans can watch the AI work in
-real time.
+pixel art **like a human** — one deliberate stroke at a time — and a live
+monitor panel above the composer repaints the canvas after every stroke, so the
+human and the model watch the same picture.
 
 ```
 DSH 像素画工作室：AI 像人类一样分步绘制像素画（打形→底色→阴影→高光），
-每一步操作实时渲染到终端，人类全程可见。
+每一步都在输入框上方的实时面板里刷新，人类全程可见。
 ```
 
 ## ✨ Features
@@ -78,9 +78,10 @@ Then verify the layer applied:
 dsh --dump-config | grep cli-anything-aseprite
 ```
 
-The plugin registers 18 `pixelart_*` tools in every session of that profile.
-Workdir defaults to `~/.dsh/aseprite-work` (override with the plugin `config:
-workdir:` row or `ASEPRITE_WORKDIR` env).
+The plugin registers 20 `pixelart_*` tools in every session of that profile.
+Workdir defaults to `<projectRoot>/temp/dsh-aseprite-work` (project root = the
+first ancestor of the `.pxa` carrying `.git` or `AGENTS.md`); override with the
+plugin `config.workdir:` row or `ASEPRITE_WORKDIR` env.
 
 ## 🚀 Quick start (AI draws a sprite)
 
@@ -113,7 +114,7 @@ dsh-cli-anything-aseprite/
 │       ├── utils/          # terminal (ANSI frames + onion skin), io, backend
 │       ├── tests/          # TEST.md plan + 73 tests
 │       └── skills/SKILL.md # AI pixel-art methodology (human drawing passes)
-└── monitor/                # optional live GUI monitor (dynamic DSH plugin)
+└── src/monitor.client.js   # live GUI monitor (conversation.input.dock + shell.overlay)
 ```
 
 ## 🧪 Test
@@ -141,7 +142,7 @@ State persists per project as `<name>.pxa` (JSON document) + sidecars
 CLI processes, exactly like a real editor session.
 
 Every mutating tool refreshes the in-memory state and returns `version`, which
-drives the live monitor UI (polling `pix-state`).
+drives the live monitor UI (polling `monitor.json`).
 
 ## 📚 References
 

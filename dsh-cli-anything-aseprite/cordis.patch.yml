@@ -1,7 +1,12 @@
 # dsh-cli-anything-aseprite bundle: registers the pixel-art studio plugin.
 # Applied after dsh-base when a profile lists this bundle.
+#
+# 刻意不写 config.workdir：默认工作区是「项目根/temp/dsh-aseprite-work」
+# （项目根 = 从 .pxa 往上第一个带 .git 或 AGENTS.md 的目录），临时 pxa、
+# 导出的 png、逐遍快照都收在那里，不往用户的 ~/.dsh 堆中间产物。
+# 需要自定义时在这里补：
+#   config:
+#     workdir: D:/some/scratch
 - insert:
     - id: cli-anything-aseprite
       name: dsh-cli-anything-aseprite
-      config:
-        workdir: ~/.dsh/aseprite-work
