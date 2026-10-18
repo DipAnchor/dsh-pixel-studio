@@ -236,6 +236,10 @@ const S = {
     imageRendering: 'pixelated', borderRadius: 8,
   },
   img: { display: 'block', width: '100%', height: 'auto', imageRendering: 'pixelated' },
+  err: {
+    fontSize: 11, lineHeight: 1.4, wordBreak: 'break-all',
+    color: 'var(--dsw-alias-state-error-primary, #c0392b)',
+  },
   kv: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -603,6 +607,9 @@ function MonitorPanel() {
                   onClick: function () { setPlaying(false); setCursor(0) },
                 }, '\u23ED')
               : null))
+      : null,
+    d.previewError
+      ? h('div', { style: S.err }, '预览导出失败：' + d.previewError)
       : null,
     kv('像素', d.pixels),
     kv('帧 / 图层', d.frames + ' / ' + d.layers),

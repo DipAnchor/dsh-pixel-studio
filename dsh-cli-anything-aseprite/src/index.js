@@ -66,6 +66,8 @@ export function apply(ctx, config = {}) {
   const state = {
     version: 0, file: null, name: '', width: 0, height: 0,
     ansi: '', png: '', pixels: 0, undo: 0, redo: 0, frames: 0, layers: 0,
+    /** 预览帧导出失败时的原因，面板据此提示，而不是静默停在旧帧。 */
+    previewError: '',
     palette: 0, dirty: false, lastOp: '', log: [],
     /** 面板只在该会话显示：pixelart_open 记下调用者的 session id。 */
     ownerSession: '',
@@ -246,8 +248,14 @@ export function apply(ctx, config = {}) {
       await runCli(['--file', state.file, '--json', 'export', 'png', tmp, '--scale', String(previewScale())])
       if (existsSync(tmp)) {
         state.png = 'data:image/png;base64,' + readFileSync(tmp).toString('base64')
+        state.previewError = ''
+      } else {
+        state.previewError = 'export produced no file: ' + tmp
       }
-    } catch (e) { /* 保留上一帧，不阻断绘制 */ }
+    } catch (e) {
+      // 保留上一帧，但把原因透出给面板，避免「画了却像没画」的错觉。
+      state.previewError = String((e && e.message) || e).slice(0, 200)
+    }
     return state.version
   }
 
@@ -542,6 +550,7 @@ export function apply(ctx, config = {}) {
           // 跟随最新（未指定 step）时给实时帧，这样两遍之间也在动；
           // 只有拖到某一遍才用那一步的快照。
           png: wantStep > 0 && pick && pick.png ? pick.png : state.png,
+          previewError: state.previewError,
           history: scanHistory(),
         })
         res.writeHead(200, {
