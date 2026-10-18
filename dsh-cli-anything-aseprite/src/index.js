@@ -275,7 +275,7 @@ export function apply(ctx, config = {}) {
 
   // ---------------------------------------------------------------- tools
   const TOOLS = [
-    ['pixelart_new', '新建像素画项目，独立文件 <name>.pxa。尺寸自由 1..1024 或 preset(icon/sprite/avatar/portrait/scene/wide/max)，palette pico8/db16/sweetie16/na16。',
+    ['pixelart_new', '新建像素画项目，独立文件 <name>.pxa。尺寸自由 1..1024 或 preset(icon/sprite/avatar/portrait/scene/wide/max)，palette pico8/db16/sweetie16/na16。建好后按「遍」画：先剪影，每遍结束调 pixelart_mark_pass 让面板时间轴有记录。',
       { name: { type: 'string', required: true }, width: { type: 'integer' }, height: { type: 'integer' }, preset: { type: 'string', enum: ['icon', 'sprite', 'avatar', 'portrait', 'scene', 'wide', 'max'] }, palette: { type: 'string' }, project: { type: 'string' } },
       async (a) => {
         // 统一路径：先把项目根定下来，workdir 才是「项目根/temp/dsh-aseprite-work」。

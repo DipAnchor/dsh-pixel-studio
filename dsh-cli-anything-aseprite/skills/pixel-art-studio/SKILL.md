@@ -7,7 +7,28 @@ description: Create, edit, animate, inspect, and export pixel-art sprites, icons
 
 Use `cli-anything-aseprite` as a stateful drawing tool. Produce the artwork, inspect it visually, revise visible problems, and return usable files. Do not stop after proposing commands.
 
-## Tool Setup
+## Drive The Tools, Not The CLI
+
+When this session exposes `pixelart_*` tools (the DSH plugin is installed), **use those tools and never hand-assemble CLI commands**. The tools keep host-side state the live panel depends on: opening a project records the session owner, every edit bumps `version`, and `pixelart_mark_pass` writes the snapshot its timeline reads. A hand-run CLI call updates the file but leaves the panel frozen, so the user loses the progress view.
+
+| Need | Tool |
+|---|---|
+| create / open a project | `pixelart_new` / `pixelart_open` |
+| inspect state | `pixelart_info`, `pixelart_terminal` |
+| draw primitives | `pixelart_draw` (pixel / line / rect / ellipse / flood / erase) |
+| select and repeat | `pixelart_region`, `pixelart_symmetry`, `pixelart_tiled`, `pixelart_gradient` |
+| layers | `pixelart_layer` |
+| fix a mistake | `pixelart_undo` / `pixelart_redo` |
+| **close a pass** | **`pixelart_mark_pass`** |
+| deliver | `pixelart_export` |
+
+Pass absolute paths. Only fall back to the CLI below when no `pixelart_*` tool exists in the session.
+
+## Mark Every Pass
+
+`pixelart_mark_pass` is not optional bookkeeping — it is how the user watches you work. Call it once at the end of each pass below, with a short `name` (`silhouette`, `outline`, `shading`, `details`, `polish`) and a one-line `note`. Skipping it means the panel shows only the final image and the timeline collapses to one step, which is indistinguishable from ignoring the process.
+
+## CLI Fallback
 
 On Windows, invoke [`scripts/invoke_cli.ps1`](scripts/invoke_cli.ps1). It resolves the installed CLI even when Python's Scripts directory is absent from `PATH`:
 
@@ -52,6 +73,7 @@ Plan the coordinate geometry and a small color hierarchy before mutating the can
 5. Add focal details with individual pixels. Use selection operations for repeated regions and symmetry or tiled mode only when they serve the requested form.
 6. For animation, duplicate a strong key frame, change only what must move, set deliberate frame durations, and inspect the exported GIF.
 7. Quantize only when off-palette colors were intentionally used and snapping them will not destroy desired color nuance.
+8. Call `pixelart_mark_pass` after every pass above, naming the pass.
 
 After each logical pass, render a checkerboard preview at 8x and inspect it with the image-viewing tool. Use `terminal` for a quick structural check when useful. Do not emit a user-facing update for every primitive; summarize each completed pass.
 
